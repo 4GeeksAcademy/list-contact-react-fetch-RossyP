@@ -16,8 +16,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			],
 			contacts:[],
-			agendas:[],
-			contactsNew: []
+			contactoAEditar: []
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -37,46 +36,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				})
 				.catch((error)=> console.log(error))
 			},
-
-			// obteniendoContacto: () => {
-			// 	// const store = getStore();
-			// 	// let listContacts = []
-			// 	//store.slugs.forEach((slug)=>{
-			// 		fetch(`https://playground.4geeks.com/contact/agendas/Rossy/contacts`)
-			// 		.then((response) =>{
-			// 			if(response.status === 404){
-			// 				actions.creandoContacto()
-			// 			}
-			// 			return response.json()
-						
-			// 		})
-
-			// 		.then((data)=>{
-			// 			console.log("HOLA", data.contacts)
-			// 			setStore({contacts: data.contacts});
-
-			// 			// console.log(listContacts)
-			// 		})
-			// 		.catch((error)=> console.log(error))
-			// },
-
-			// creandoAgenda: () =>{
-			// 	fetch(`https://playground.4geeks.com/contact/agendas/Rossy`,{
-			// 		method: "POST",
-			// 		headers:{
-			// 			'Content-Type': 'application/json'
-			// 		} ,
-			// 	})
-			// 	.then((response) => response.json())
-			// 	.then((data) => {
-			// 		console.log(data)
-			// 		if(data.slug){
-			// 			// setSwitchGetList(prev => !prev)
-			// 			// setNameValue("")
-			// 			setStore({agendas: data.slug})
-			// 		}
-			// 	})
-			// },
 
 			creandoUsuario: () => {
 				fetch(`https://playground.4geeks.com/contact/agendas/Rossy`,{
@@ -114,6 +73,49 @@ const getState = ({ getStore, getActions, setStore }) => {
                 .catch((err) => console.log(err));
 			},
 
+			eliminarContacto: (id) => {
+				const store = getStore()
+				fetch(`https://playground.4geeks.com/contact/agendas/Rossy/contacts/${id}`,{
+					method: "DELETE"
+				})
+				.then((response) =>{
+					console.log(response)
+					if(response.ok){
+						let listaFiltrada = store.contacts.filter((item)=>item.id !== id)
+						setStore({contacts: listaFiltrada})
+					}
+					return response.json()
+				})
+				.catch((error) => console.log(error))
+			},
+
+			editarContacto: (obj, id) => {
+				let store = getStore()
+				let actions = getActions()
+				fetch(`https://playground.4geeks.com/contact/agendas/Rossy/contacts/${id}`,{
+					method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json'
+					},
+				body: JSON.stringify({
+						"name": obj.name,
+						"phone": obj.phone,
+						"email": obj.email,
+						"address": obj.address
+					})
+				})
+				.then((response) => response.json())
+				.then((data) =>{
+					actions.obteniendoUsuario()
+					//	actions.setContactoAEditar()
+					//setTasksList(tasksList.map(item=> item.id !== editingTaskId ? data : item))
+					console.log(data)
+				})
+			},
+
+			setContactoAEditar: (id) => {
+				setStore({ contactoAEditar: id });
+			},
 
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");

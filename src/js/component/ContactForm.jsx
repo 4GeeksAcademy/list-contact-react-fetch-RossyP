@@ -1,31 +1,43 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 
 export const ContactForm = () =>{
 
 
-	const { actions } = useContext(Context);
+	const { store, actions } = useContext(Context);
+    let navigate = useNavigate()
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
+        
         const {inputName, inputPhone, inputEmail, inputAddress} = e.target
 
-        const nuevoContacto = {
+        const contactoSeleccionado = {
             // name: inputName.value,
             // phone: inputPhone.value,
             // email: inputEmail.value,
             // address: inputAddress.value
         }
 
-        nuevoContacto.name = inputName.value
-        nuevoContacto.phone = inputPhone.value
-        nuevoContacto.email = inputEmail.value
-        nuevoContacto.address = inputAddress.value
+        contactoSeleccionado.name = inputName.value
+        contactoSeleccionado.phone = inputPhone.value
+        contactoSeleccionado.email = inputEmail.value
+        contactoSeleccionado.address = inputAddress.value
         
-        actions.creandoContacto(nuevoContacto)
-        console.log(nuevoContacto)
+        
+        console.log(contactoSeleccionado)
+
+        let contactoExistente = store.contacts.filter((contact)=> contact === contactoSeleccionado)
+
+        if(contactoExistente){
+             actions.editarContacto(contactoSeleccionado, store.contactoAEditar)
+        }else{
+            actions.creandoContacto(contactoSeleccionado)
+        }
+           
+        //actions.editarContacto(contactoSeleccionado, contact.id);
 	};
 
 
