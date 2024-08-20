@@ -65,7 +65,7 @@ export const ContactForm = () =>{
                 </div>
                 
                 <div className="col-12">
-                    <button type="submit" className="btn btn-primary">save</button>
+                    <button type="submit" className="btn btn-primary">Save</button>
                 </div>
             </form>
 
