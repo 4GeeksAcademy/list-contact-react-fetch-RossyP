@@ -16,7 +16,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			],
 			contacts:[],
-			contactoAEditar: []
+			contactoAEditar: null
 		},
 		actions: {
 			// Use getActions to call a function within a fuction

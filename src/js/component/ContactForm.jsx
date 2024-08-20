@@ -9,6 +9,7 @@ export const ContactForm = () =>{
 	const { store, actions } = useContext(Context);
     let navigate = useNavigate()
 
+
 	const handleSubmit = (e) => {
 		e.preventDefault();
         
@@ -29,14 +30,16 @@ export const ContactForm = () =>{
         
         console.log(contactoSeleccionado)
 
-        let contactoExistente = store.contacts.filter((contact)=> contact === contactoSeleccionado)
+        //let contactoExistente = store.contacts.filter((contact)=> contact === contactoSeleccionado)
 
-        if(contactoExistente){
-             actions.editarContacto(contactoSeleccionado, store.contactoAEditar)
-        }else{
-            actions.creandoContacto(contactoSeleccionado)
+        if (store.contactoAEditar) {
+            actions.editarContacto(contactoSeleccionado, store.contactoAEditar);
+            actions.setContactoAEditar(null)
+        } else {
+            actions.creandoContacto(contactoSeleccionado);
         }
-           
+        navigate("/")
+
         //actions.editarContacto(contactoSeleccionado, contact.id);
 	};
 
@@ -67,8 +70,9 @@ export const ContactForm = () =>{
             </form>
 
             <Link to="/">
-				<button type="button" className="btn btn-primary">Home</button>
-			</Link>
+                <p className="text-primary pt-3">Back to contacts</p>
+            </Link>
+
         </div>
     )
 }
