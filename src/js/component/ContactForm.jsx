@@ -1,30 +1,62 @@
-import React from "react";
+import React, { useState, useContext } from "react";
+import { Context } from "../store/appContext";
+import { Link } from "react-router-dom";
+
 
 export const ContactForm = () =>{
+
+
+	const { actions } = useContext(Context);
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+        const {inputName, inputPhone, inputEmail, inputAddress} = e.target
+
+        const nuevoContacto = {
+            // name: inputName.value,
+            // phone: inputPhone.value,
+            // email: inputEmail.value,
+            // address: inputAddress.value
+        }
+
+        nuevoContacto.name = inputName.value
+        nuevoContacto.phone = inputPhone.value
+        nuevoContacto.email = inputEmail.value
+        nuevoContacto.address = inputAddress.value
+        
+        actions.creandoContacto(nuevoContacto)
+        console.log(nuevoContacto)
+	};
+
+
     return(
-        <div>
-            <form class="row g-3">
-                <div class="col-md-12">
-                    <label for="inputEmail4" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="inputEmail4"/>
+        <div className="text-black">
+            <form className="row g-3" onSubmit={handleSubmit}>
+                <div className="col-md-12">
+                    <label htmlFor="inputName" className="form-label">Name</label>
+                    <input type="text" className="form-control" id="inputName" placeholder="Name"/>
                 </div>
-                <div class="col-md-12">
-                    <label for="inputPassword4" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="inputPassword4"/>
+                <div className="col-md-12">
+                    <label htmlFor="inputPhone" className="form-label">Phone</label>
+                    <input type="number" className="form-control" id="inputPhone" placeholder="Phone"/>
                 </div>
-                <div class="col-12">
-                    <label for="inputAddress" class="form-label">Address</label>
-                    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St"/>
+                <div className="col-12">
+                    <label htmlFor="inputEmail" className="form-label">Email</label>
+                    <input type="email" className="form-control" id="inputEmail" placeholder="Email"/>
                 </div>
-                <div class="col-12">
-                    <label for="inputAddress2" class="form-label">Address 2</label>
-                    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor"/>
+                <div className="col-12">
+                    <label htmlFor="inputAddress" className="form-label">Address</label>
+                    <input type="text" className="form-control" id="inputAddress" placeholder="Address"/>
                 </div>
                 
-                <div class="col-12">
-                    <button type="submit" class="btn btn-primary">Sign in</button>
+                <div className="col-12">
+                    <button type="submit" className="btn btn-primary">save</button>
                 </div>
-                </form>
+            </form>
+
+            <Link to="/">
+				<button type="button" className="btn btn-primary">Home</button>
+			</Link>
         </div>
     )
 }

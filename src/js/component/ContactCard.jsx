@@ -4,7 +4,8 @@ import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { faPhone } from '@fortawesome/free-solid-svg-icons';
 
-export const ContactCard = (props) =>{
+export const ContactCard = ({contact}) =>{
+
     return(
         <div className="card mb-3 g-0 bg-danger" style={{maxWidth: "70%", height:"170px"}}>
             <div className="row g-0">
@@ -13,10 +14,10 @@ export const ContactCard = (props) =>{
                 </div>
                 <div className="col-md-8">
                 <div className="card-body">
-                    <h5 className="card-title">{props.name}</h5>
-                    <p className="card-text"><FontAwesomeIcon icon={faLocationDot} /> {props.address}</p>
-                    <p className="card-text"><FontAwesomeIcon icon={faPhone} /> {props.phone}</p>
-                    <p className="card-text"><FontAwesomeIcon icon={faEnvelope} /> {props.email}</p>
+                    <h5 className="card-title">{contact.name}</h5>
+                    <p className="card-text"><FontAwesomeIcon icon={faLocationDot} /> {contact.address}</p>
+                    <p className="card-text"><FontAwesomeIcon icon={faPhone} /> {contact.phone}</p>
+                    <p className="card-text"><FontAwesomeIcon icon={faEnvelope} /> {contact.email}</p>
                 </div>
                 </div>
             </div>
